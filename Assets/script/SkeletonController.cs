@@ -3,14 +3,20 @@ using UnityEngine;
 public class SkeletonController : MonoBehaviour
 {
     public float attackRange = 5f; // Rango de ataque
-    
     public float attackCooldown = 0.5f; // Cooldown de ataque en segundos
     public GameObject projectilePrefab; // Prefab del proyectil
     public Transform firePoint; // Punto desde donde se dispara el proyectil
     public Animator animator; // Referencia al Animator del esqueleto
-    public Transform player; // Referencia al transform del jugador
+    public int health = 3; // Vida del esqueleto
 
+    private Transform player; // Referencia al transform del jugador
     private float lastAttackTime = -Mathf.Infinity; // Último tiempo de ataque
+
+    private void Start()
+    {
+        // Asignar el jugador por tag
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     private void Update()
     {
@@ -56,6 +62,15 @@ public class SkeletonController : MonoBehaviour
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        // Reducir la vida del esqueleto y manejar la muerte si es necesario
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
 
     private void Die()
     {
@@ -63,5 +78,4 @@ public class SkeletonController : MonoBehaviour
         // Eliminar el esqueleto después de un pequeño retraso
         Destroy(gameObject, 0.2f);
     }
-
 }

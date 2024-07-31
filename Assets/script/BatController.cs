@@ -21,6 +21,12 @@ public class BatController : MonoBehaviour
         {
             TakeDamage(1);
         }
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            TakeDamage(1);
+        }
+
     }
 
     void TakeDamage(int damage)
