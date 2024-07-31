@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement; // Asegúrate de incluir este namespace
 
 public class SkeletonController : MonoBehaviour
 {
@@ -66,6 +67,7 @@ public class SkeletonController : MonoBehaviour
     {
         // Reducir la vida del esqueleto y manejar la muerte si es necesario
         health -= damage;
+        Debug.Log("Skeleton Health: " + health); // Mensaje de depuración
         if (health <= 0)
         {
             Die();
@@ -74,8 +76,32 @@ public class SkeletonController : MonoBehaviour
 
     private void Die()
     {
-        animator.SetBool("isDead", true);
+        if (animator != null)
+        {
+            animator.SetBool("isDead", true);
+        }
+
+        // Mensaje de depuración
+        Debug.Log("Skeleton is Dead. Loading next scene.");
+
         // Eliminar el esqueleto después de un pequeño retraso
         Destroy(gameObject, 0.2f);
+
+        // Cambiar a la siguiente escena después de un retraso
+        Invoke("LoadNextScene", 0.5f); // Ajusta el tiempo si es necesario
+    }
+
+    private void LoadNextScene()
+    {
+        // Reemplaza "NextSceneName" con el nombre de la escena a la que deseas ir
+        string sceneName = "NextSceneName"; // Asegúrate de que este nombre es correcto
+        if (Application.CanStreamedLevelBeLoaded(sceneName))
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            Debug.LogError("Scene " + sceneName + " cannot be loaded.");
+        }
     }
 }

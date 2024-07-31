@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SkeletonControllerHp : MonoBehaviour
 {
@@ -24,7 +25,9 @@ public class SkeletonControllerHp : MonoBehaviour
 
         if (health <= 0)
         {
+
             Die();
+            SceneManager.LoadScene("Menu");
         }
     }
 

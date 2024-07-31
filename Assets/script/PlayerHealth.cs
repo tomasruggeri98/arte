@@ -1,5 +1,6 @@
 using System.Collections; // Añade esta línea
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -59,7 +60,11 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("Player Died");
+
+
         Destroy(gameObject);
+
+        SceneManager.LoadScene("Menu");
     }
 }
 
